@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class RecipeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RecipeController.class);
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "get a specific recipe by id")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable Integer id) {
         Recipe recipe = null;
@@ -43,7 +44,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping("/anime")
+    @GetMapping(value = "/anime", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "get all recipes from an anime by its id")
     public ResponseEntity<List<Recipe>> getRecipesByAnimeid(@RequestParam Integer animeid) {
         try {
@@ -64,7 +65,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping("/author")
+    @GetMapping(value = "/author", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "get all recipes from an author")
     public ResponseEntity<List<Recipe>> getRecipesByAuthor(@RequestParam String author) {
         try {
@@ -85,7 +86,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping
+    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "get all recipes containing part of the name of the recipe from an anime by its id")
     public ResponseEntity<List<Recipe>> getRecipesByNameContainingAndAnimeid(@RequestParam String name, @RequestParam Integer animeid) {
         try {
@@ -106,7 +107,7 @@ public class RecipeController {
         }
     }
 
-    @GetMapping("/search-anime")
+    @GetMapping(value = "/search-anime", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "get all recipes containing part of the name of the recipe from an anime by its name")
     public ResponseEntity<List<Recipe>> getRecipesByNameContainingAndAnime(@RequestParam String name, @RequestParam String anime) {
         try {
@@ -127,7 +128,8 @@ public class RecipeController {
         }
     }
 
-    @PostMapping
+    @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "create a recipe")
     public ResponseEntity<Recipe> addRecipe (@RequestBody Recipe recipe) {
         try {
@@ -143,7 +145,8 @@ public class RecipeController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     @Operation(summary = "update a recipe by id")
     public ResponseEntity<Recipe> updateRecipeById(@RequestBody Recipe recipe, @PathVariable Integer id) {
         try {

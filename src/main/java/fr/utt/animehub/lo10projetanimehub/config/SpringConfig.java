@@ -24,14 +24,14 @@ public class SpringConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/swagger-ui-recipes.html", "/swagger-ui/**", "/api-docs", "/api-docs.yaml").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/recipes/**").hasAuthority("USER")
+                        .requestMatchers(HttpMethod.GET, "/recipes/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/recipes/**").hasAuthority("USER")
                         .requestMatchers(HttpMethod.PUT, "/recipes/**").hasAuthority("USER")
                         .requestMatchers(HttpMethod.DELETE, "/recipes/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
+                .formLogin(form -> form.defaultSuccessUrl("http://25.18.117.74:3000/", true));
 
         return http.build();
     }
